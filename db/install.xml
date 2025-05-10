@@ -7,6 +7,7 @@
     <TABLE NAME="tool_promptshare" COMMENT="Instances to change page promptshare i.e. css, html and javascript">
       <FIELDS>
         <FIELD NAME="id" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="true"/>
+        <FIELD NAME="contextid" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="false" COMMENT="The context it can be used in e.g. CONTEXT_SYSTEM = 10, COURSECAT = 40, COURSE = 50;"/>
         <FIELD NAME="promptsharename" TYPE="char" LENGTH="35" NOTNULL="false" SEQUENCE="false" COMMENT="Name used to refer to this prompt"/>
         <FIELD NAME="prompt" TYPE="text" NOTNULL="false" SEQUENCE="false"/>
         <FIELD NAME="location" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="false"/>
