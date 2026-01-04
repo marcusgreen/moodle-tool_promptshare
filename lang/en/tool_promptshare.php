@@ -26,4 +26,32 @@
 defined('MOODLE_INTERNAL') || die();
 
 $string['pluginname'] = 'Promptshare';
-$string['privacy:metadata'] = 'The Promptshare plugin doesn\'t store any personal data.';
+$string['privacy:metadata'] = 'The Promptshare plugin stores prompts created by users.';
+$string['privacy:metadata:tool_promptshare'] = 'Information about prompts created by users.';
+$string['privacy:metadata:tool_promptshare:userid'] = 'The user who created the prompt.';
+$string['privacy:metadata:tool_promptshare:name'] = 'The name of the prompt.';
+$string['privacy:metadata:tool_promptshare:template'] = 'The prompt template content.';
+$string['privacy:metadata:tool_promptshare:is_global'] = 'Whether the prompt is shared globally.';
+$string['privacy:metadata:tool_promptshare:timecreated'] = 'When the prompt was created.';
+$string['privacy:metadata:tool_promptshare:timemodified'] = 'When the prompt was last modified.';
+
+// Form strings
+$string['promptname'] = 'Prompt name';
+$string['template'] = 'Prompt template';
+$string['template_help'] = 'Enter your prompt template. Use {{placeholder}} syntax for variables that will be replaced in the UI.';
+$string['shareglobally'] = 'Share this prompt globally with all users';
+
+// Page strings
+$string['manageprompts'] = 'Manage prompts';
+$string['createprompt'] = 'Create new prompt';
+$string['editprompt'] = 'Edit prompt';
+$string['deleteprompt'] = 'Delete prompt';
+$string['confirmdelete'] = 'Are you sure you want to delete this prompt?';
+$string['promptcreated'] = 'Prompt created successfully';
+$string['promptupdated'] = 'Prompt updated successfully';
+$string['promptdeleted'] = 'Prompt deleted successfully';
+$string['myprompts'] = 'My prompts';
+$string['globalprompts'] = 'Global prompts';
+$string['noprompts'] = 'No prompts found';
+$string['placeholder'] = 'Placeholder';
+$string['preview'] = 'Preview';
