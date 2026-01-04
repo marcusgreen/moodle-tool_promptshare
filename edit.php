@@ -31,8 +31,17 @@ $context = \context_system::instance();
 require_capability('moodle/site:config', $context);
 
 // Get parameters
-$action = required_param('action', PARAM_ALPHA);
+$action = optional_param('action', '', PARAM_ALPHA);
 $id = optional_param('id', 0, PARAM_INT);
+
+// Validate action parameter
+if (empty($action)) {
+    print_error('missingparam', 'error', new moodle_url('/admin/tool/promptshare/index.php'), 'action');
+}
+
+if (!in_array($action, ['create', 'edit'])) {
+    print_error('invalidaction', 'tool_promptshare', new moodle_url('/admin/tool/promptshare/index.php'));
+}
 
 // Set up page
 admin_externalpage_setup('tool_promptshare_manage', '', null, '', array('pagelayout' => 'admin'));

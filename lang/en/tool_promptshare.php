@@ -39,6 +39,9 @@ $string['privacy:metadata:tool_promptshare:timemodified'] = 'When the prompt was
 $string['promptname'] = 'Prompt name';
 $string['template'] = 'Prompt template';
 $string['template_help'] = 'Enter your prompt template. Use {{placeholder}} syntax for variables that will be replaced in the UI.';
+$string['template_help_help'] = 'Enter your prompt template. Use {{placeholder}} syntax for variables that will be replaced in the UI.';
+$string['invalidaction'] = 'Invalid action specified';
+$string['actions'] = 'Actions';
 $string['shareglobally'] = 'Share this prompt globally with all users';
 
 // Page strings
