@@ -1,5 +1,5 @@
 <?php
-// This file is part of Moodle - http://moodle.org/
+// This file is part of Moodle - https://moodle.org/
 //
 // Moodle is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -12,21 +12,20 @@
 // GNU General Public License for more details.
 //
 // You should have received a copy of the GNU General Public License
-// along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
+// along with Moodle.  If not, see <https://www.gnu.org/licenses/>.
 
 /**
- * Settings for the Promptshare tool.
+ * Set default values for a new install
  *
- * @package    tool_promptshare
- * @copyright  2024 Marcus Green
- * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+ * @package     tool_tweak
+ * @category    admin
+ * @copyright   2023 Marcus Green
+ * @license     https://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
+
 defined('MOODLE_INTERNAL') || die();
 
-if ($hassiteconfig) { // Only show to users with admin-level permissions
-    $ADMIN->add('tools', new admin_externalpage(
-        'tool_promptshare_manage',
-        get_string('pluginname', 'tool_promptshare'),
-        new moodle_url('/admin/tool/promptshare/index.php')
-    ));
+if (is_siteadmin()) {
+    $ADMIN->add('tools', new admin_category('promptshare', get_string('pluginname', 'tool_promptshare')));
+    $settingspage = new admin_settingpage('promptsettings' , get_string('promptsettings', 'tool_tpromptshare'));
 }
