@@ -17,9 +17,9 @@
 /**
  * Set default values for a new install
  *
- * @package     tool_tweak
+ * @package     tool_promptshare
  * @category    admin
- * @copyright   2023 Marcus Green
+ * @copyright   2026 Marcus Green
  * @license     https://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
@@ -27,5 +27,8 @@ defined('MOODLE_INTERNAL') || die();
 
 if (is_siteadmin()) {
     $ADMIN->add('tools', new admin_category('promptshare', get_string('pluginname', 'tool_promptshare')));
-    $settingspage = new admin_settingpage('promptsettings' , get_string('promptsettings', 'tool_tpromptshare'));
+    $settingspage = new admin_settingpage('promptsettings', get_string('promptsettings', 'tool_promptshare'));
+    
+    // Add the settings page to the admin tree
+    $ADMIN->add('promptshare', $settingspage);
 }
