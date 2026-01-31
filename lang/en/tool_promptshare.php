@@ -27,4 +27,8 @@ defined('MOODLE_INTERNAL') || die();
 
 $string['pluginname'] = 'Prompt share';
 $string['promptsettings'] = 'Prompt settings';
-$string['privacy:metadata'] = 'The Prompt share plugin does not store any personal data.';
+$string['promptname'] = 'Prompt name';
+$string['prompttext'] = 'Prompt text';
+
+$string['promptname_help'] = 'Prompt name help';
+
