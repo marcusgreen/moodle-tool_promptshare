@@ -25,6 +25,7 @@
 
 defined('MOODLE_INTERNAL') || die();
 
+$string['assignment'] = 'Assignment';
 $string['pluginname'] = 'Prompt share';
 $string['promptsettings'] = 'Prompt settings';
 $string['promptname'] = 'Prompt name';

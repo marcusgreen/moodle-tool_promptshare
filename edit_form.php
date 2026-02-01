@@ -23,6 +23,9 @@
  * @copyright  2023 Marcus Green
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
+
+use core_reportbuilder\external\filters\add;
+
 require_once('../..//../config.php');
 require_once($CFG->libdir . '/adminlib.php');
 require_once($CFG->libdir . '/formslib.php');
@@ -41,7 +44,7 @@ $PAGE->set_context($context);
 admin_externalpage_setup('tool_edit_form');
 
 /**
- *  Edit tool_promptshare code
+ *  Edit tool_promptshare items
  * @package tool_promptshare
  * @copyright Marcus Green 2023
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
@@ -63,6 +66,14 @@ class tool_edit_form_form extends moodleform {
 
         $mform = $this->_form;
 
+        $context = [
+            CONTEXT_SYSTEM => get_string('coresystem'),
+            CONTEXT_COURSECAT => get_string('coursecategory'),
+            CONTEXT_COURSE => get_string('course'),
+            CONTEXT_MODULE => get_string('assignment', 'tool_promptshare'),
+        ];
+        asort($context);
+
         $mform->addElement('hidden', 'id');
         $mform->setType('id', PARAM_INT);
         $navbuttons = [];
@@ -72,6 +83,7 @@ class tool_edit_form_form extends moodleform {
         $navbuttons[] = $mform->createElement('submit', 'delete', get_string('delete'));
 
         $mform->addGroup($navbuttons);
+        $mform->addElement('select', 'context', get_string('context'), $context);
 
         $mform->addElement('text', 'promptname', get_string('name'));
         $mform->setType('promptname', PARAM_TEXT);
@@ -80,7 +92,9 @@ class tool_edit_form_form extends moodleform {
         $options['multiple'] = true;
         $options['tags'] = true;
 
-        $mform->addElement('textarea', 'prompttext', get_string('prompttext', 'tool_promptshare'),
+        $mform->addElement(
+            'textarea',
+        'prompttext', get_string('prompttext', 'tool_promptshare'),
          ['rows' => 15, 'cols' => 80]);
        // $mform->addHelpButton('promptshare', 'promptshare', 'tool_promptshare');
         $mform->setType('promptshare', PARAM_RAW);
