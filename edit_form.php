@@ -74,6 +74,13 @@ class tool_edit_form_form extends moodleform {
         ];
         asort($context);
 
+        $options = [];
+        $pagetypes = get_all_module_page_types();
+        $mform->addElement('autocomplete', 'pagetypes', get_string('pagetypes', 'tool_promptshare'), $pagetypes, $options);
+        $mform->addHelpButton('pagetypes', 'pagetypes', 'tool_promptshare');
+
+        //  xdebug_break();
+
         $mform->addElement('hidden', 'id');
         $mform->setType('id', PARAM_INT);
         $navbuttons = [];
@@ -176,3 +183,37 @@ function get_page_record(int $page) : \stdClass {
     return $record;
 }
 
+function get_all_module_page_types() {
+    global $CFG;
+    $pagetypes = [];
+
+    // Get all installed modules.
+    $modules = \core_component::get_plugin_list('mod');
+
+    foreach ($modules as $modname => $modpath) {
+        // Check if module has page_type_list function
+        $lib = $modpath . '/lib.php';
+        if (file_exists($lib)) {
+            require_once($lib);
+            $function = $modname . '_page_type_list';
+            if (function_exists($function)) {
+                $modpagetypes = $function('mod-' . $modname . '-view', null, null);
+
+                // Process each page type
+                foreach ($modpagetypes as $key => $value) {
+                    // Replace wildcards with specific page types
+                    if (strpos($key, '*') !== false) {
+                        // Add specific page types (just the keys)
+                        $pagetypes[] = str_replace('*', 'view', $key);
+                        $pagetypes[] = str_replace('*', 'index', $key);
+                    } else {
+                        // Keep non-wildcard entries (just the key)
+                        $pagetypes[] = $key;
+                    }
+                }
+            }
+        }
+    }
+
+    return array_unique($pagetypes); // Remove duplicates
+}

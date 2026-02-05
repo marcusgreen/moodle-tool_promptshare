@@ -28,7 +28,12 @@ defined('MOODLE_INTERNAL') || die();
 if (is_siteadmin()) {
     $ADMIN->add('tools', new admin_category('promptshare', get_string('pluginname', 'tool_promptshare')));
     $settingspage = new admin_settingpage('promptsettings', get_string('promptsettings', 'tool_promptshare'));
-    
-    // Add the settings page to the admin tree
+
+    $managepage = new admin_externalpage('tool_promptshare_manage',
+        get_string('editprompts', 'tool_promptshare'),
+        new moodle_url('/admin/tool/promptshare/edit_form.php'),
+    );
+
+    $ADMIN->add('promptshare', $managepage);
     $ADMIN->add('promptshare', $settingspage);
 }

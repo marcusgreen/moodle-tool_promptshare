@@ -26,10 +26,12 @@
 defined('MOODLE_INTERNAL') || die();
 
 $string['assignment'] = 'Assignment';
+$string['editprompts'] = 'Edit prompts';
 $string['pluginname'] = 'Prompt share';
 $string['promptsettings'] = 'Prompt settings';
 $string['promptname'] = 'Prompt name';
 $string['prompttext'] = 'Prompt text';
-
+$string['pagetypes'] = 'Page types';
+$string['pagetypes_help'] = 'Page types help string';
 $string['promptname_help'] = 'Prompt name help';
 
