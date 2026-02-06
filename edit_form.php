@@ -134,7 +134,7 @@ if ($delete) {
         $recordcount = 1;
     }
 }
-$baseurl = new moodle_url('/admin/tool/tweak/edit_form.php', ['page' => $page]);
+$baseurl = new moodle_url('/admin/tool/promptshare/edit_form.php', ['page' => $page]);
 
 $record->page = $page;
 

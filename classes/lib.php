@@ -39,8 +39,8 @@ class lib {
 
     ): void {
         global $DB, $PAGE;
-        $PAGE->requires->css('/admin/tool/tweak/amd/src/codemirror/lib/codemirror.css');
-        $PAGE->requires->css('/admin/tool/tweak/amd/src/codemirror/addon/hint/show-hint.css');
+        $PAGE->requires->css('/admin/tool/promptshare/amd/src/codemirror/lib/codemirror.css');
+        $PAGE->requires->css('/admin/tool/promptshare/amd/src/codemirror/addon/hint/show-hint.css');
     }
 
     /**
