@@ -31,7 +31,10 @@ $string['pluginname'] = 'Prompt share';
 $string['promptsettings'] = 'Prompt settings';
 $string['promptname'] = 'Prompt name';
 $string['prompttext'] = 'Prompt text';
+$string['prompttext_help'] = 'Prompt text help';
 $string['pagetypes'] = 'Page types';
 $string['pagetypes_help'] = 'Page types help string';
 $string['promptname_help'] = 'Prompt name help';
+$string['promptnotes'] = 'Prompt notes';
+$string['promptnotes_help'] = 'Additional notes about this prompt';
 

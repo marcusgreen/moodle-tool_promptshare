@@ -26,7 +26,7 @@
 
 use core_reportbuilder\external\filters\add;
 
-require_once('../..//../config.php');
+require_once('../../../config.php');
 require_once($CFG->libdir . '/adminlib.php');
 require_once($CFG->libdir . '/formslib.php');
 require_once('lib.php');
@@ -74,13 +74,6 @@ class tool_edit_form_form extends moodleform {
         ];
         asort($context);
 
-        $options = [];
-        $pagetypes = get_all_module_page_types();
-        $mform->addElement('autocomplete', 'pagetypes', get_string('pagetypes', 'tool_promptshare'), $pagetypes, $options);
-        $mform->addHelpButton('pagetypes', 'pagetypes', 'tool_promptshare');
-
-        //  xdebug_break();
-
         $mform->addElement('hidden', 'id');
         $mform->setType('id', PARAM_INT);
         $navbuttons = [];
@@ -90,9 +83,17 @@ class tool_edit_form_form extends moodleform {
         $navbuttons[] = $mform->createElement('submit', 'delete', get_string('delete'));
 
         $mform->addGroup($navbuttons);
+
+        $options = [];
+        $pagetypes = get_all_module_page_types();
+        $mform->addElement('autocomplete', 'pagetypes', get_string('pagetypes', 'tool_promptshare'), $pagetypes, $options);
+        $mform->addHelpButton('pagetypes', 'pagetypes', 'tool_promptshare');
+
+        //  xdebug_break();
+
         $mform->addElement('select', 'context', get_string('context'), $context);
 
-        $mform->addElement('text', 'promptname', get_string('name'));
+        $mform->addElement('text', 'promptname', get_string('promptname', 'tool_promptshare'));
         $mform->setType('promptname', PARAM_TEXT);
         $mform->addHelpButton('promptname', 'promptname', 'tool_promptshare');
 
@@ -103,8 +104,15 @@ class tool_edit_form_form extends moodleform {
             'textarea',
         'prompttext', get_string('prompttext', 'tool_promptshare'),
          ['rows' => 15, 'cols' => 80]);
-       // $mform->addHelpButton('promptshare', 'promptshare', 'tool_promptshare');
-        $mform->setType('promptshare', PARAM_RAW);
+        $mform->addHelpButton('prompttext', 'prompttext', 'tool_promptshare');
+        $mform->setType('prompttext', PARAM_RAW);
+
+        $mform->addElement(
+            'textarea',
+        'promptnotes', get_string('promptnotes', 'tool_promptshare'),
+         ['rows' => 5, 'cols' => 80]);
+        $mform->addHelpButton('promptnotes', 'promptnotes', 'tool_promptshare');
+        $mform->setType('promptnotes', PARAM_RAW);
 
     }
 
@@ -182,16 +190,24 @@ function get_page_record(int $page) : \stdClass {
     }
     return $record;
 }
-
+/**
+ * Get all module page types from installed Moodle modules.
+ *
+ * Retrieves page types from all installed modules by calling each module's
+ * page_type_list function if it exists. Handles wildcard page types by
+ * expanding them to specific 'view' and 'index' variants.
+ *
+ * @return array Array of unique page type strings, with empty string as first element
+ */
 function get_all_module_page_types() {
     global $CFG;
-    $pagetypes = [];
+    $pagetypes = [''];  // Start with empty string as first element.
 
     // Get all installed modules.
     $modules = \core_component::get_plugin_list('mod');
 
     foreach ($modules as $modname => $modpath) {
-        // Check if module has page_type_list function
+        // Check if module has page_type_list function.
         $lib = $modpath . '/lib.php';
         if (file_exists($lib)) {
             require_once($lib);
@@ -199,15 +215,15 @@ function get_all_module_page_types() {
             if (function_exists($function)) {
                 $modpagetypes = $function('mod-' . $modname . '-view', null, null);
 
-                // Process each page type
+                // Process each page type.
                 foreach ($modpagetypes as $key => $value) {
-                    // Replace wildcards with specific page types
+                    // Replace wildcards with specific page types.
                     if (strpos($key, '*') !== false) {
                         // Add specific page types (just the keys)
                         $pagetypes[] = str_replace('*', 'view', $key);
                         $pagetypes[] = str_replace('*', 'index', $key);
                     } else {
-                        // Keep non-wildcard entries (just the key)
+                        // Keep non-wildcard entries (just the key).
                         $pagetypes[] = $key;
                     }
                 }
@@ -215,5 +231,5 @@ function get_all_module_page_types() {
         }
     }
 
-    return array_unique($pagetypes); // Remove duplicates
+    return array_unique($pagetypes); // Remove duplicates.
 }

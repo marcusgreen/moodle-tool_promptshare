@@ -10,6 +10,7 @@
         <FIELD NAME="userid" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="false" COMMENT="User who created the prompt"/>
         <FIELD NAME="name" TYPE="char" LENGTH="255" NOTNULL="true" SEQUENCE="false" COMMENT="Name of the prompt"/>
         <FIELD NAME="prompttext" TYPE="text" NOTNULL="true" SEQUENCE="false" COMMENT="The prompt text"/>
+        <FIELD NAME="promptnotes" TYPE="text" NOTNULL="false" SEQUENCE="false" COMMENT="Additional notes about the prompt"/>
         <FIELD NAME="is_global" TYPE="int" LENGTH="1" NOTNULL="true" SEQUENCE="false" COMMENT="Whether this prompt is shared globally"/>
         <FIELD NAME="timecreated" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="false" COMMENT="Time when the prompt was created"/>
         <FIELD NAME="timemodified" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="false" COMMENT="Time when the prompt was last modified"/>
