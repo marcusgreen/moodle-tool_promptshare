@@ -92,6 +92,7 @@ class tool_edit_form_form extends moodleform {
         //  xdebug_break();
 
         $mform->addElement('select', 'context', get_string('context'), $context);
+        $mform->addHelpButton('context', 'context', 'tool_promptshare');
 
         $mform->addElement('text', 'promptname', get_string('promptname', 'tool_promptshare'));
         $mform->setType('promptname', PARAM_TEXT);

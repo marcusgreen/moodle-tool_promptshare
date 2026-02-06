@@ -37,4 +37,6 @@ $string['pagetypes_help'] = 'Page types help string';
 $string['promptname_help'] = 'Prompt name help';
 $string['promptnotes'] = 'Prompt notes';
 $string['promptnotes_help'] = 'Additional notes about this prompt';
+$string['context'] = 'Context';
+$string['context_help'] = 'Context where the prompt will be available (system, course category, course, or activity)';
 
