@@ -76,23 +76,16 @@ class tool_edit_form_form extends moodleform {
 
         $mform->addElement('hidden', 'id');
         $mform->setType('id', PARAM_INT);
-        $navbuttons = [];
-        $navbuttons[] = $mform->createElement('submit', 'save', get_string('save'));
-        $navbuttons[] = $mform->createElement('submit', 'cancel', get_string('cancel'));
-        $navbuttons[] = $mform->createElement('submit', 'newrecord', get_string('new'));
-        $navbuttons[] = $mform->createElement('submit', 'delete', get_string('delete'));
-
-        $mform->addGroup($navbuttons);
-
-        $options = [];
-        $pagetypes = get_all_module_page_types();
-        $mform->addElement('autocomplete', 'pagetypes', get_string('pagetypes', 'tool_promptshare'), $pagetypes, $options);
-        $mform->addHelpButton('pagetypes', 'pagetypes', 'tool_promptshare');
 
         //  xdebug_break();
 
         $mform->addElement('select', 'context', get_string('context'), $context);
         $mform->addHelpButton('context', 'context', 'tool_promptshare');
+
+        $options = [];
+        $pagetypes = get_all_module_page_types();
+        $mform->addElement('autocomplete', 'pagetypes', get_string('pagetypes', 'tool_promptshare'), $pagetypes, $options);
+        $mform->addHelpButton('pagetypes', 'pagetypes', 'tool_promptshare');
 
         $mform->addElement('text', 'promptname', get_string('promptname', 'tool_promptshare'));
         $mform->setType('promptname', PARAM_TEXT);
@@ -114,6 +107,14 @@ class tool_edit_form_form extends moodleform {
          ['rows' => 5, 'cols' => 80]);
         $mform->addHelpButton('promptnotes', 'promptnotes', 'tool_promptshare');
         $mform->setType('promptnotes', PARAM_RAW);
+
+        $navbuttons = [];
+        $navbuttons[] = $mform->createElement('submit', 'save', get_string('save'));
+        $navbuttons[] = $mform->createElement('submit', 'cancel', get_string('cancel'));
+        $navbuttons[] = $mform->createElement('submit', 'newrecord', get_string('new'));
+        $navbuttons[] = $mform->createElement('submit', 'delete', get_string('delete'));
+
+        $mform->addGroup($navbuttons);
 
     }
 

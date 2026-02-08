@@ -14,7 +14,7 @@
 // You should have received a copy of the GNU General Public License
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
-namespace tool_tweak;
+namespace tool_promptshare;
 
 defined('MOODLE_INTERNAL') || die();
 
@@ -34,7 +34,7 @@ class lib {
      * @return void
      * @package tool_tweak
      */
-    public static function before_standard_head_html_generation(
+    
         \core\hook\output\before_standard_head_html_generation $hook,
 
     ): void {
@@ -130,7 +130,7 @@ class lib {
      * @param array $tweaks
      * @return array
      */
-    public static function filter_by_pagetype(array $tweaks): array {
+    
         global $PAGE;
         $pagetype = $PAGE->pagetype;
         $parts = explode('-', $PAGE->pagetype);
@@ -150,7 +150,7 @@ class lib {
      * @param int $cmid
      * @return array
      */
-    public static function filter_by_tag(array $tweaks, int $cmid): array {
+    
         $plugintags = self::get_plugintags($cmid);
         foreach ($tweaks as $key => $tweak) {
             if ($tweak->tag) {
@@ -161,46 +161,7 @@ class lib {
         }
         return $tweaks;
     }
-    /**
-     * Filter out tweaks where the profilefield is not blank and that
-     * is not checked (set to "1! for the user). Must be a checkbox
-     * profile field type.
-     * @param array $tweaks
-     * @return array
-     */
-    public static function filter_by_profilefield(array $tweaks): array {
-        global $USER;
-        foreach ($tweaks as $key => $tweak) {
-            if ($tweak->profilefield <> '') {
-                if (array_key_exists($tweak->profilefield, $USER->profile )) {
-                    if ($USER->profile[$tweak->profilefield] <> "1") {
-                        unset($tweaks[$key]);
-                    }
-                }
-            }
-        }
-        return $tweaks;
-    }
 
-    /**
-     * Get all tweaks and associated page types
-     * minus the actual content (html,css,javascript)
-     *
-     * @return array
-     */
-    public static function get_all_tweaks(): array {
-        return [];
-        global $DB;
-        $sql = 'SELECT tweak.id, tweakname, cohort,tag,pagetype, disabled, profilefield FROM {tool_tweak} tweak
-                LEFT JOIN {tool_tweak_pagetype} pagetype on pagetype.tweak=tweak.id
-                WHERE tweak.disabled <> 1';
-        $alltweaks = $DB->get_recordset_sql($sql);
-        $tweaks = [];
-        foreach ($alltweaks as $tweak) {
-            $tweaks[] = $tweak;
-        }
-        return $tweaks;
-    }
 
     /**
      * Get any tags set up for this plugin instance
@@ -227,7 +188,7 @@ class lib {
      * @param string $content
      * @return string
      */
-    public static function php_get_string(string $content) {
+    
         preg_match_all('/get_string\\(.*?\)/', $content, $matches);
         foreach ($matches[0] as $functioncall) {
             $toreplace = $functioncall;
@@ -261,7 +222,7 @@ class lib {
      * Show the page type to the admin user
      * Purely for debug and setup doesn't work on some pages
      */
-    public static function show_pagetype(): void {
+    
 
         global $USER, $PAGE, $OUTPUT;
         if (get_config('tool_tweak', 'showpagetype')) {
