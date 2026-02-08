@@ -142,17 +142,10 @@ $record->page = $page;
 $mform = new tool_edit_form_form($baseurl);
 
 if ($data = $mform->get_data()) {
-    if (isset($data->save)) {
-            $params = [
-                'id' => $data->id,
-                'promptname' => $data->promptname,
-                'prompttext' => $data->prompttext,
-
-            ];
-            $DB->update_record('tool_promptshare', $params);
-            update_pagetypes($data);
-            $record = $DB->get_record('tool_promptshare', ['id' => $data->id]);
-    }
+if (isset($data->save)) {
+    xdebug_break();
+    $record = \tool_promptshare\lib::process_form_submission($data);
+}
     if (isset($data->upload)) {
         $upload = true;
     }

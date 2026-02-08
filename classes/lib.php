@@ -28,20 +28,6 @@ require_once($CFG->dirroot.'/user/profile/lib.php');
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 class lib {
-    /**
-     * Summary of before_standard_head_html_generation
-     * @param \core\hook\output\before_standard_head_html_generation $hook
-     * @return void
-     * @package tool_tweak
-     */
-    
-        \core\hook\output\before_standard_head_html_generation $hook,
-
-    ): void {
-        global $DB, $PAGE;
-        $PAGE->requires->css('/admin/tool/promptshare/amd/src/codemirror/lib/codemirror.css');
-        $PAGE->requires->css('/admin/tool/promptshare/amd/src/codemirror/addon/hint/show-hint.css');
-    }
 
     /**
      *
@@ -49,56 +35,21 @@ class lib {
      * @param \core\hook\output\before_standard_footer_html_generation $hook
      * @return void
      */
-    public static function before_standard_footer_html_generation(
-    \core\hook\output\before_standard_footer_html_generation $hook): void {
+    public static function process_form_submission($data) {
         global $DB;
-        $cmid = optional_param('cmid', null, PARAM_INT);
-        $id = optional_param('id', null , PARAM_INT);
 
-        $cmid = $cmid ?? $id;
-        self::show_pagetype();
-        $cache = \cache::make('tool_tweak', 'tweakdata');
-        if (($tweaks = $cache->get('tweaks')) === false) {
-            $tweaks = self::get_all_tweaks();
-            $cache->set('tweaks', $tweaks);
-        }
+        $params = [
+            'id' => $data->id,
+            'promptname' => $data->promptname,
+            'prompttext' => $data->prompttext,
+        ];
+        xdebug_break();
+        $DB->update_record('tool_promptshare', $params);
+       // self::update_pagetypes($data);
 
-        if (get_config('tool_tweak', 'disablecache')) {
-            $tweaks = self::get_all_tweaks();
-        }
-
-        $tweaks = self::filter_by_cohort($tweaks);
-        $tweaks = self::filter_by_pagetype($tweaks);
-        $tweaks = self::filter_by_profilefield($tweaks);
-        if ($cmid) {
-            $tweaks = self::filter_by_tag($tweaks, $cmid);
-        }
-        $tweakids = [];
-        foreach ($tweaks as $tweak) {
-            $tweakids[$tweak->id] = $tweak->id;
-        }
-        if (count($tweakids)) {
-            [$insql, $inparams] = $DB->get_in_or_equal($tweakids);
-            $sql = "SELECT * FROM {tool_tweak} WHERE id $insql";
-            $fulltweaks = $DB->get_records_sql($sql, $inparams);
-        }
-
-        $content = '';
-        if (isset($fulltweaks)) {
-            foreach ($fulltweaks as $tweak) {
-                        $content .= $tweak->html. PHP_EOL;
-                        $content .= '<script>var current_language="'.current_language().'";'
-                        .PHP_EOL.$tweak->javascript. '</script>'.PHP_EOL;
-                        $content .= '<style>'.$tweak->css. '</style>'.PHP_EOL;
-            }
-        }
-        $content = self::php_get_string($content);
-        global $PAGE;
-        $PAGE->requires->js_call_amd('tool_tweak/edit_form', 'init', ['javascript' => 'id_questiontext']);
-
-        $hook->add_html($content);
-
+        return $DB->get_record('tool_promptshare', ['id' => $data->id]);
     }
+
     /**
      * If a tweak has a cohort but the current user is not in that cohort
      * remove the tweak from alltweaks.
@@ -130,7 +81,7 @@ class lib {
      * @param array $tweaks
      * @return array
      */
-    
+
         global $PAGE;
         $pagetype = $PAGE->pagetype;
         $parts = explode('-', $PAGE->pagetype);
@@ -150,7 +101,7 @@ class lib {
      * @param int $cmid
      * @return array
      */
-    
+
         $plugintags = self::get_plugintags($cmid);
         foreach ($tweaks as $key => $tweak) {
             if ($tweak->tag) {
@@ -188,7 +139,7 @@ class lib {
      * @param string $content
      * @return string
      */
-    
+
         preg_match_all('/get_string\\(.*?\)/', $content, $matches);
         foreach ($matches[0] as $functioncall) {
             $toreplace = $functioncall;
@@ -222,7 +173,7 @@ class lib {
      * Show the page type to the admin user
      * Purely for debug and setup doesn't work on some pages
      */
-    
+
 
         global $USER, $PAGE, $OUTPUT;
         if (get_config('tool_tweak', 'showpagetype')) {
